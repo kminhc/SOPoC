@@ -1,0 +1,23 @@
+{
+    "soPoCApp": {
+        "eventsource" : {
+            "home": {
+                "title": "Eventsources",
+                "createLabel": "Create a new Eventsource",
+                "createOrEditLabel": "Create or edit a Eventsource",
+                "search": "Search for Eventsource"
+            },
+            "created": "A new Eventsource is created with identifier {{ param }}",
+            "updated": "A Eventsource is updated with identifier {{ param }}",
+            "deleted": "A Eventsource is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Eventsource {{ id }}?"
+            },
+            "detail": {
+                "title": "Eventsource"
+            },
+            "name": "Name",
+            "user": "User"
+        }
+    }
+}

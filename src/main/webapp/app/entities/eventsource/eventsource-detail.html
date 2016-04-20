@@ -1,0 +1,23 @@
+
+<div>
+    <h2><span translate="soPoCApp.eventsource.detail.title">Eventsource</span> {{vm.eventsource.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="soPoCApp.eventsource.name">Name</dt></dt>
+        <dd>
+            <span>{{vm.eventsource.name}}<span>
+        </dd>
+        <hr>
+        <dt><span translate="soPoCApp.eventsource.user">user</span></dt>
+        <dd>
+            {{vm.eventsource.user.login}}
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
