@@ -5,11 +5,11 @@
         .module('soPoCApp')
         .controller('TestController', TestController);
 
-    TestController.$inject = ['$scope', 'Principal', 'LoginService'];
+    TestController.$inject = ['$scope', 'Principal', 'LoginService', 'Event', 'AlertService'];
 
-    function TestController ($scope, Principal, LoginService) {
+    function TestController ($scope, Principal, LoginService, Event, AlertService) {
         var vm = this;
-
+        vm.eventList = [];
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
@@ -19,21 +19,23 @@
 
         getAccount();
 
-        $scope.eventSources = {
-            events: [
-                {
-                    title: 'TestEvent1',
-                    start: '2016-04-18'
-                },
-                {
-                    title: 'TestEvent2',
-                    start: '2016-04-23'
+        vm.loadAll = function() {
+            Event.query(onSuccess, onError);
+            function onSuccess(data, headers) {
+                for (var i = 0; i < data.length; i++) {
+                    vm.eventList.push(data[i]);
                 }
-                // etc...
-            ],
+            }
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+        };
+
+        $scope.eventSources =[{
+            events: vm.eventList,
             color: 'red',   // an option!
             textColor: 'black' // an option!
-        };
+        }];
 
         $scope.uiConfig = {
             calendar:{
@@ -47,7 +49,7 @@
             dayClick: $scope.alertEventOnClick,
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
-            }   
+            }
         };
 
          $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -60,5 +62,6 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
             });
         }
+        vm.loadAll();
     }
 })();
