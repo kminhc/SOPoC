@@ -7,13 +7,13 @@
                     <input type="text" class="form-control" name="title" id="field_title"
                            ng-model="vm.event.title"
                            required ng-maxlength="50" />
-                    <div ng-show="editForm.title.$invalid">
+                    <div ng-show="createForm.title.$invalid">
                         <p class="help-block"
-                           ng-show="editForm.title.$error.required" translate="entity.validation.required">
+                           ng-show="createForm.title.$error.required" translate="entity.validation.required">
                             This field is required.
                         </p>
                         <p class="help-block"
-                           ng-show="editForm.title.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
+                           ng-show="createForm.title.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="50">
                             This field cannot be longer than 50 characters.
                         </p>
                     </div>
@@ -26,9 +26,9 @@
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('start')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                         </div>
-                        <div ng-show="editForm.start.$invalid">
+                        <div ng-show="createForm.start.$invalid">
                             <p class="help-block"
-                               ng-show="editForm.start.$error.required" translate="entity.validation.required">
+                               ng-show="createForm.start.$error.required" translate="entity.validation.required">
                                 This field is required.
                             </p>
                         </div>
@@ -56,7 +56,7 @@
                         <option value=""></option>
                     </select>
                 </div>
-                <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                <button type="submit" ng-disabled="createForm.$invalid || isSaving" class="btn btn-primary">
                     <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
                 </button>
             </form>

@@ -9,14 +9,15 @@
 
     function TestController ($scope, Principal, LoginService, Event, AlertService, Eventsource) {
         var vm = this;
-        vm.eventList = []
+        vm.eventList = Event.query();
         vm.eventsources = Eventsource.query();;
         vm.event = {
             title: null,
             start: null,
             end: null,
             allDay: null,
-            id: null
+            id: null,
+            eventsource: null
         };
         vm.account = null;
         vm.isAuthenticated = null;
@@ -28,7 +29,6 @@
         getAccount();
 
         var onSaveSuccess = function (result) {
-            $scope.$emit('soPoCApp:eventUpdate', result);
             vm.isSaving = false;
         };
 
@@ -42,18 +42,6 @@
                 Event.update(vm.event, onSaveSuccess, onSaveError);
             } else {
                 Event.save(vm.event, onSaveSuccess, onSaveError);
-            }
-        };
-
-        vm.loadAll = function() {
-            Event.query(onSuccess, onError);
-            function onSuccess(data, headers) {
-                for (var i = 0; i < data.length; i++) {
-                    vm.eventList.push(data[i]);
-                }
-            }
-            function onError(error) {
-                AlertService.error(error.data.message);
             }
         };
 
@@ -92,6 +80,5 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
             });
         }
-        vm.loadAll();
     }
 })();
