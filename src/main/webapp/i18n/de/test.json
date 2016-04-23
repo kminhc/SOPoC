@@ -14,6 +14,14 @@
             "follow": "kontaktieren Sie uns mit @java_hipster auf Twitter"
         },
         "like": "Wenn Sie JHipster mögen, vergessen Sie nicht uns einen Stern zu geben auf",
-        "github": "GitHub"
+        "github": "GitHub",
+        "event": {
+            "title": "Titel",
+            "start": "Start",
+            "end" : "Ende",
+            "allDay": "ganztägig",
+            "eventsource": "EventSource"
+
+        }
     }
 }

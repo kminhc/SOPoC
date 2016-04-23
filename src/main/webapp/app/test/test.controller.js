@@ -5,11 +5,19 @@
         .module('soPoCApp')
         .controller('TestController', TestController);
 
-    TestController.$inject = ['$scope', 'Principal', 'LoginService', 'Event', 'AlertService'];
+    TestController.$inject = ['$scope', 'Principal', 'LoginService', 'Event', 'AlertService', 'Eventsource'];
 
-    function TestController ($scope, Principal, LoginService, Event, AlertService) {
+    function TestController ($scope, Principal, LoginService, Event, AlertService, Eventsource) {
         var vm = this;
-        vm.eventList = [];
+        vm.eventList = []
+        vm.eventsources = Eventsource.query();;
+        vm.event = {
+            title: null,
+            start: null,
+            end: null,
+            allDay: null,
+            id: null
+        };
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
@@ -18,6 +26,24 @@
         });
 
         getAccount();
+
+        var onSaveSuccess = function (result) {
+            $scope.$emit('soPoCApp:eventUpdate', result);
+            vm.isSaving = false;
+        };
+
+        var onSaveError = function () {
+            vm.isSaving = false;
+        };
+
+        vm.save = function () {
+            vm.isSaving = true;
+            if (vm.event.id !== null) {
+                Event.update(vm.event, onSaveSuccess, onSaveError);
+            } else {
+                Event.save(vm.event, onSaveSuccess, onSaveError);
+            }
+        };
 
         vm.loadAll = function() {
             Event.query(onSuccess, onError);
@@ -29,6 +55,14 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
+        };
+
+        vm.datePickerOpenStatus = {};
+        vm.datePickerOpenStatus.start = false;
+        vm.datePickerOpenStatus.end = false;
+
+        vm.openCalendar = function(date) {
+            vm.datePickerOpenStatus[date] = true;
         };
 
         $scope.eventSources =[{
@@ -50,10 +84,6 @@
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
             }
-        };
-
-         $scope.alertOnEventClick = function( date, jsEvent, view){
-            $scope.alertMessage = (date.title + ' was clicked ');
         };
 
         function getAccount() {
