@@ -50,6 +50,9 @@
             } else {
                 Event.save(vm.event, onSaveSuccess, onSaveError);
             }
+        };
+
+        function updateCalendar(){
             $scope.events = Event.query();
             $scope.events.$promise.then(function(result){
 
@@ -57,11 +60,13 @@
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.events);
             })
-        };
+        }
+
 
         /*Setting is Saving state*/
         var onSaveSuccess = function (result) {
             vm.isSaving = false;
+            updateCalendar();
         };
         var onSaveError = function () {
             vm.isSaving = false;
