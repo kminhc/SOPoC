@@ -82,13 +82,21 @@
             vm.datePickerOpenStatus[date] = true;
         };
 
+        var popoverTemplate = ['<div class="popover" role="tooltip">',
+                               '<div class="arrow">',
+                               '</div><div class="popover-content"></div>',
+                               '</div>'].join('');
+
+        var content = '<button type="button" class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-trash"></i></button>'
+
         $scope.popoverOnClick = function (calEvent,jsEvent,view){
             var eventID = jsEvent.target;
             $(eventID).popover({
+                html: true,
                 container: 'body',
                 placement: 'right',
-                content: 'Hello',
-                template: '',
+                template: popoverTemplate,
+                content: content,
             });
             $(eventID).popover('show');
         }
