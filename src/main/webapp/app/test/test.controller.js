@@ -77,29 +77,42 @@
         vm.datePickerOpenStatus.start = false;
         vm.datePickerOpenStatus.end = false;
 
+
         vm.openCalendar = function(date) {
             vm.datePickerOpenStatus[date] = true;
         };
 
+        $scope.popoverOnClick = function (calEvent,jsEvent,view){
+            var eventID = jsEvent.target;
+            $(eventID).popover({
+                container: 'body',
+                placement: 'right',
+                content: 'Hello',
+                template: '',
+            });
+            $(eventID).popover('show');
+        }
+
         /*Configuration for the calendar*/
         $scope.uiConfig = {
             calendar:{
-                height: 450,
+                height: 500,
                 editable: true,
                 header:{
                     left: 'month basicWeek basicDay agendaWeek agendaDay',
                     center: 'title',
                     right: 'today prev,next'
-                }
+                },
+                eventClick: $scope.popoverOnClick
             }
         };
+
+
 
        /* Set reference to eventsources for the calendar
         as referred here: "http://fullcalendar.io/docs/event_data/Event_Source_Object/"*/
         $scope.eventSources =[{
             events: $scope.events
-           /* color: 'red',   // an option!
-            textColor: 'black' // an option!*/
         }];
 
     }
