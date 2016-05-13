@@ -24,7 +24,7 @@
             "allDay": "ganztägig",
             "eventsource": "EventSource",
             "delete": {
-                "question": "Soll Event {{ id }} wirklich dauerhaft gelöscht werden?"
+                "question": "Soll das Event {{ id }} wirklich dauerhaft gelöscht werden?"
             }
 
         }
