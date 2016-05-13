@@ -1,0 +1,41 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "eventsource",
+            "otherEntityName": "eventsource",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "50"
+        },
+        {
+            "fieldName": "start",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "end",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "allDay",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20160420130020",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "event",
+    "pagination": "infinite-scroll"
+}

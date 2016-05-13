@@ -5,54 +5,35 @@
         .module('soPoCApp')
         .controller('TestController', TestController);
 
-    TestController.$inject = ['$scope', 'Principal', 'LoginService'];
+    TestController.$inject = ['$scope', 'Principal', 'LoginService', 'Event', 'AlertService', 'Eventsource', 'uiCalendarConfig'];
 
-    function TestController ($scope, Principal, LoginService) {
+    function TestController ($scope, Principal, LoginService, Event, AlertService, Eventsource, uiCalendarConfig) {
         var vm = this;
+        /*Get all Events*/
+        $scope.events = Event.query();
+        /*Get all EventSources for dropdown list*/
+        vm.eventSourcesList = Eventsource.query();
+
+        vm.event = {
+            title: null,
+            start: null,
+            end: null,
+            allDay: null,
+            id: null,
+            eventsource: null
+        };
 
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
+
+
+
+
+
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
-
-        getAccount();
-
-        $scope.eventSources = {
-            events: [
-                {
-                    title: 'TestEvent1',
-                    start: '2016-04-18'
-                },
-                {
-                    title: 'TestEvent2',
-                    start: '2016-04-23'
-                }
-                // etc...
-            ],
-            color: 'red',   // an option!
-            textColor: 'black' // an option!
-        };
-
-        $scope.uiConfig = {
-            calendar:{
-            height: 450,
-            editable: true,
-            header:{
-              left: 'month basicWeek basicDay agendaWeek agendaDay',
-              center: 'title',
-              right: 'today prev,next'
-            },
-            dayClick: $scope.alertEventOnClick,
-            eventDrop: $scope.alertOnDrop,
-            eventResize: $scope.alertOnResize
-            }   
-        };
-
-         $scope.alertOnEventClick = function( date, jsEvent, view){
-            $scope.alertMessage = (date.title + ' was clicked ');
-        };
 
         function getAccount() {
             Principal.identity().then(function(account) {
@@ -60,5 +41,76 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
             });
         }
+
+        getAccount();
+
+        /*Save Event to Database*/
+        vm.save = function () {
+            vm.isSaving = true;
+            if (vm.event.id !== null) {
+                Event.update(vm.event, onSaveSuccess, onSaveError);
+            } else {
+                Event.save(vm.event, onSaveSuccess, onSaveError);
+            }
+        };
+
+        function updateCalendar(){
+            $scope.events = Event.query();
+            $scope.events.$promise.then(function(result){
+
+                $scope.events = result;
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.events);
+            })
+        }
+
+        /*alert on event click*/
+
+        $scope.alertOnEventClick = function(date, jsEvent, view){
+            $scope.alertMessage = (date.title + ' was clicked');
+            vm.clickedEventID = date.id;
+
+        }
+
+        /*Setting is Saving state*/
+        var onSaveSuccess = function (result) {
+            vm.isSaving = false;
+            updateCalendar();
+        };
+        var onSaveError = function () {
+            vm.isSaving = false;
+        };
+
+        /*Declaring and initializing datePickerOpen State */
+        vm.datePickerOpenStatus = {};
+        vm.datePickerOpenStatus.start = false;
+        vm.datePickerOpenStatus.end = false;
+
+
+        vm.openCalendar = function(date) {
+            vm.datePickerOpenStatus[date] = true;
+        };
+
+        /*Configuration for the calendar*/
+        $scope.uiConfig = {
+            calendar:{
+                editable: true,
+                header:{
+                    left: 'month basicWeek agendaWeek agendaDay',
+                    center: 'title',
+                    right: 'today prev,next'
+                },
+                eventClick: $scope.alertOnEventClick
+            }
+        };
+
+
+
+       /* Set reference to eventsources for the calendar
+        as referred here: "http://fullcalendar.io/docs/event_data/Event_Source_Object/"*/
+        $scope.eventSources =[{
+            events: $scope.events
+        }];
+
     }
 })();
