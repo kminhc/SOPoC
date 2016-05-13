@@ -1,6 +1,15 @@
 <div ng-cloak>
     <div class="row">
         <div class="col-md-4">
+            <h3 translate="test.newEvent">Create a new Event</h3>
+        </div>
+        <div class="col-md-8">
+            <h1 translate="test.title">Welcome to SoPoC Calendar!</h1>
+            <p class="lead" translate="test.subtitle">This is your homepage</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
             <form name="createForm" role="form" novalidate ng-submit="vm.save()" show-validation>
                 <div class="form-group">
                     <label class="control-label" translate="test.event.title" for="field_title">Title</label>
@@ -62,9 +71,33 @@
             </form>
         </div>
         <div class="col-md-8">
-            <h1 translate="test.title">Welcome, Java Hipster!</h1>
-            <p class="lead" translate="test.subtitle">This is your homepage</p>
             <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
         </div>
+    </div>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-8">
+                <div class="alert alert-success fade in" ng-show="alertMessage != undefined && alertMessage != ''">
+                    <h4>{{alertMessage}}</h4>
+                </div>
+
+                <span class="pull-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                ng-show="alertMessage != undefined && alertMessage != ''" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="test.delete({id:vm.clickedEventID})"
+                                ng-show="alertMessage != undefined && alertMessage != ''" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                     </div>
+                </span>
+            </div>
+
+
     </div>
 </div>

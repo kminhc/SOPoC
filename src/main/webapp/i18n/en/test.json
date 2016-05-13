@@ -1,7 +1,8 @@
 {
     "test": {
-        "title": "Welcome, Java Hipster!",
+        "title": "Welcome to SoPoC Calendar!",
         "subtitle": "This is your homepage",
+        "newEvent": "Erstelle ein neues Event",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
@@ -21,6 +22,9 @@
             "end" : "End",
             "allDay": "allDay",
             "eventsource": "EventSource"
+            "delete": {
+                "question": "Are you sure you want to delete Event {{ id }}?"
+            }
         }
     }
 }

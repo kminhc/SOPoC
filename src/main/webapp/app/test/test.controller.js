@@ -29,6 +29,8 @@
 
 
 
+
+
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
@@ -62,6 +64,13 @@
             })
         }
 
+        /*alert on event click*/
+
+        $scope.alertOnEventClick = function(date, jsEvent, view){
+            $scope.alertMessage = (date.title + ' was clicked');
+            vm.clickedEventID = date.id;
+
+        }
 
         /*Setting is Saving state*/
         var onSaveSuccess = function (result) {
@@ -82,36 +91,16 @@
             vm.datePickerOpenStatus[date] = true;
         };
 
-        var popoverTemplate = ['<div class="popover" role="tooltip">',
-                               '<div class="arrow">',
-                               '</div><div class="popover-content"></div>',
-                               '</div>'].join('');
-
-        var content = '<button type="button" class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-trash"></i></button>'
-
-        $scope.popoverOnClick = function (calEvent,jsEvent,view){
-            var eventID = jsEvent.target;
-            $(eventID).popover({
-                html: true,
-                container: 'body',
-                placement: 'right',
-                template: popoverTemplate,
-                content: content,
-            });
-            $(eventID).popover('show');
-        }
-
         /*Configuration for the calendar*/
         $scope.uiConfig = {
             calendar:{
-                height: 500,
                 editable: true,
                 header:{
-                    left: 'month basicWeek basicDay agendaWeek agendaDay',
+                    left: 'month basicWeek agendaWeek agendaDay',
                     center: 'title',
                     right: 'today prev,next'
                 },
-                eventClick: $scope.popoverOnClick
+                eventClick: $scope.alertOnEventClick
             }
         };
 

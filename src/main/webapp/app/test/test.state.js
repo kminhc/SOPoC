@@ -8,7 +8,8 @@
     stateConfig.$inject = ['$stateProvider'];
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('test', {
+        $stateProvider
+            .state('test', {
             parent: 'app',
             url: '/',
             data: {
@@ -27,6 +28,30 @@
                     return $translate.refresh();
                 }]
             }
-        });
+        })
+            .state('test.delete', {
+                parent: 'test',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/test/event-delete-dialog.html',
+                        controller: 'EventDeleteController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Event', function(Event) {
+                                return Event.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('test', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            });
     }
 })();
