@@ -65,9 +65,11 @@
                         <option value=""></option>
                     </select>
                 </div>
+                <span class="pull-right">
                 <button type="submit" ng-disabled="createForm.$invalid || isSaving" class="btn btn-primary">
                     <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
                 </button>
+                    </span>
             </form>
         </div>
         <div class="col-md-8">
@@ -85,10 +87,6 @@
 
                 <span class="pull-right">
                     <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                ng-show="alertMessage != undefined && alertMessage != ''" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit">Edit</span>
-                        </button>
                         <button type="submit"
                                 ui-sref="test.delete({id:vm.clickedEventID})"
                                 ng-show="alertMessage != undefined && alertMessage != ''" class="btn btn-danger btn-sm">

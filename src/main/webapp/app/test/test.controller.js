@@ -67,7 +67,9 @@
         /*alert on event click*/
 
         $scope.alertOnEventClick = function(date, jsEvent, view){
-            $scope.alertMessage = (date.title + ' was clicked');
+            $scope.alertMessage = ('Das Event '+ date.title + date.start + ' wurde ausgewählt.');
+
+            vm.event = Event.get({id : date.id});
             vm.clickedEventID = date.id;
 
         }
