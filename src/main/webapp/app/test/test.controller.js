@@ -13,6 +13,7 @@
         $scope.events = Event.query();
         /*Get all EventSources for dropdown list*/
         vm.eventSourcesList = Eventsource.query();
+        $scope.dateformat = "dd.MM.yyyy"
 
         vm.event = {
             title: null,
@@ -67,12 +68,23 @@
         /*alert on event click*/
 
         $scope.alertOnEventClick = function(date, jsEvent, view){
-            $scope.alertMessage = ('Das Event '+ date.title + date.start + ' wurde ausgewählt.');
+            $scope.alertMessage = ('Das Event '+ date.title + ' wurde ausgewählt.');
 
             vm.event = Event.get({id : date.id});
             vm.clickedEventID = date.id;
 
-        }
+        };
+
+        $scope.onDayClick = function(date, jsEvent, view){
+            vm.testDate = new Date(date.format());
+            $scope.alertMessage = ('Der Tag ' + vm.testDate.toLocaleDateString() + ' wurde ausgewählt.');
+
+
+
+            vm.event.title = "";
+            vm.event.start = vm.testDate;
+
+        };
 
         /*Setting is Saving state*/
         var onSaveSuccess = function (result) {
@@ -102,7 +114,8 @@
                     center: 'title',
                     right: 'today prev,next'
                 },
-                eventClick: $scope.alertOnEventClick
+                eventClick: $scope.alertOnEventClick,
+                dayClick:   $scope.onDayClick
             }
         };
 
