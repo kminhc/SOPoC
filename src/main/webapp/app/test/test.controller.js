@@ -76,15 +76,31 @@
         };
 
         $scope.onDayClick = function(date, jsEvent, view){
-            vm.testDate = new Date(date.format());
-            $scope.alertMessage = ('Der Tag ' + vm.testDate.toLocaleDateString() + ' wurde ausgewählt.');
-
-
+            vm.changedDate = new Date(date.format());
+            $scope.alertMessage = ('Der Tag ' + vm.changedDate.toLocaleDateString() + ' wurde ausgewählt.');
 
             vm.event.title = "";
-            vm.event.start = vm.testDate;
+            vm.event.start = vm.changedDate;
 
         };
+
+        $scope.dropEvent = function (event, delta, revertFunc,jsEvent, ui, view){
+            vm.changedDateStart = new Date(event.start.format());
+            if(event.end != null){
+                vm.changedDateEnd = new Date(event.end.format());
+                $scope.alertMessage = ('Das Event ' + event.title + ' wurde auf ' + vm.changedDateStart.toLocaleDateString()+' - ' + vm.changedDateEnd.toLocaleDateString() + ' verschoben.')
+            }else{
+                vm.changedDateEnd = null;
+                $scope.alertMessage = ('Das Event ' + event.title + ' wurde auf ' + vm.changedDateStart.toLocaleDateString() + ' verschoben.')
+            }
+            
+            vm.event.id = event.id;
+            vm.event.title = event.title;
+            vm.event.start = vm.changedDateStart;
+            vm.event.end = vm.changedDateEnd;
+            vm.event.allDay = event.allDay;
+
+        }
 
         /*Setting is Saving state*/
         var onSaveSuccess = function (result) {
@@ -115,7 +131,9 @@
                     right: 'today prev,next'
                 },
                 eventClick: $scope.alertOnEventClick,
-                dayClick:   $scope.onDayClick
+                dayClick:   $scope.onDayClick,
+                eventDrop: $scope.dropEvent
+
             }
         };
 
