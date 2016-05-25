@@ -19,7 +19,7 @@
             title: null,
             start: null,
             end: null,
-            allDay: null,
+            allDay: false,
             id: null,
             eventsource: null
         };
@@ -91,9 +91,9 @@
                 $scope.alertMessage = ('Das Event ' + event.title + ' wurde auf ' + vm.changedDateStart.toLocaleDateString()+' - ' + vm.changedDateEnd.toLocaleDateString() + ' verschoben.')
             }else{
                 vm.changedDateEnd = null;
-                $scope.alertMessage = ('Das Event ' + event.title + ' wurde auf ' + vm.changedDateStart.toLocaleDateString() + ' verschoben.')
+                $scope.alertMessage = ('Das Event ' + event.title + ' wurde auf ' + vm.changedDateStart.toLocaleDateString() + event.allDay + ' verschoben.')
             }
-            
+
             vm.event.id = event.id;
             vm.event.title = event.title;
             vm.event.start = vm.changedDateStart;
