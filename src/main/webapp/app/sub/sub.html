@@ -1,0 +1,25 @@
+<div ng-cloak>
+    <div class="row">
+        <div ui-tree>
+            <ol ui-tree-nodes="" ng-model="nodes">
+                <li ng-repeat="node in nodes" ui-tree-node>
+                    <div ui-tree-handle>
+                        <i class="fa fa-2x" data-nodrag   ng-class="{'fa-square-o': node.checkStatus==='unchecked', 'fa-check-square-o ': node.checkStatus==='checked', 'fa-minus-square-o': node.checkStatus==='partlyChecked'}" ng-click="toggleCheck(node)" data-nodrag></i>
+                        <i class="fa fa-2x" data-nodrag  ng-class="{'fa-caret-square-o-right': collapsed, 'fa-caret-square-o-down': !collapsed}" ng-click="toggle(this)"></i>
+                        <i class="fa fa-2x" data-nodrag  ng-class="{'fa-folder': collapsed, 'fa-folder-open': !collapsed}" ng-click="toggle(this)"></i>
+                        <span class="textContents"><strong>{{node.title}}</strong></span >
+                        <i class="fa fa-times-circle fa-2x pull-right"  data-nodrag  ng-click="remove(this)"></i>
+                        <i class="fa fa-plus-square fa-2x pull-right" data-nodrag  ng-click="newSubItem(this)"></i>
+                    </div>
+                    <ol ui-tree-nodes="" ng-model="node.nodes">
+                        <li ng-repeat="subNode in node.nodes" ui-tree-node>
+                            <div ui-tree-handle>
+                                {{subNode.title}}
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

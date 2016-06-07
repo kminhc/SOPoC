@@ -21,7 +21,7 @@
             "start": "Start",
             "end" : "End",
             "allDay": "allDay",
-            "eventsource": "EventSource"
+            "eventsource": "EventSource",
             "delete": {
                 "question": "Are you sure you want to delete Event {{ id }}?"
             }
