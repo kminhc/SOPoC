@@ -39,6 +39,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/moment/moment.js',
             'src/main/webapp/bower_components/fullcalendar/dist/fullcalendar.js',
             'src/main/webapp/bower_components/angular-ui-calendar/src/calendar.js',
+            'src/main/webapp/bower_components/angular-ui-tree/dist/angular-ui-tree.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

@@ -3,9 +3,9 @@
 
     angular
         .module('soPoCApp', [
-            'ngStorage', 
+            'ngStorage',
             'tmh.dynamicLocale',
-            'pascalprecht.translate', 
+            'pascalprecht.translate',
             'ngResource',
             'ngCookies',
             'ngAria',
@@ -17,7 +17,8 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
-            'ui.calendar'
+            'ui.calendar',
+            'ui.tree'
         ])
         .run(run);
 
